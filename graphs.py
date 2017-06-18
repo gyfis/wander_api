@@ -36,12 +36,15 @@ def place_rank(place):
 def path_rank(path, places):
     rank = 0
     for place in path[1:-1]:
-        rank += place_rank(places[place]) / 5
+        rank += place_rank(places[place - 2]) / 5
+
+    if rank == 0:
+        return 0
 
     same_type_penalty_ratio = 0.3
     same_type_penalty = len(path) - 2
     for place1, place2 in zip(path[1:-1], path[2:-1]):
-        if places[place1]['types'][0] == places[place2]['types'][0]:
+        if places[place1 - 2]['types'][0] == places[place2 - 2]['types'][0]:
             same_type_penalty -= 1
 
     return 5 * (same_type_penalty_ratio * same_type_penalty + (1 - same_type_penalty_ratio) * rank) / (len(path) - 2)
@@ -49,6 +52,9 @@ def path_rank(path, places):
 
 def generate_possible_path(path, distances, duration):
     new_path = path
+
+    if len(distances) == 2:
+        return new_path
 
     number_of_returns = 50
     while True:
@@ -128,7 +134,7 @@ def beautify(loc_in, loc_out, path, distances, places):
     data = [{'lon': loc_in[0], 'lat': loc_in[1]}]
 
     for p in path[1:-1]:
-        place = places[p]
+        place = places[p - 2]
         data.append({
             'lon': place['geometry']['location']['lng'],
             'lat': place['geometry']['location']['lat'],
