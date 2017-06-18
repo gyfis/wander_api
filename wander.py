@@ -13,7 +13,8 @@ def api():
     lat_out = request.args.get('lat_out', -1)
     lon_out = request.args.get('lon_out', -1)
     duration = request.args.get('duration', -1)
-    place_type_filter = request.args.get('types', 'art_gallery,bar,cafe,church,events,library,museum,park,restaurant,zoo').split(',')
+
+    place_type_filter = request.args.get('types', 'art_gallery, bar, cafe, church, events, library, museum, park, restaurant, zoo'.split(', '))
 
     if lat_in == -1 or lon_in == -1 or lat_out == -1 or lon_out == -1 or duration == -1:
         return False, 404
