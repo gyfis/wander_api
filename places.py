@@ -8,14 +8,14 @@ _GOOD_WEATHER_PLACE_TYPES = 'art_gallery, bar, cafe, church, events, library, mu
 _BAD_WEATHER_PLACE_TYPES = 'art_gallery, bar, cafe, church, events, library, museum, restaurant'.split(', ')
 
 _AVERAGE_TIMES = {
-    'art_gallery': 1,
-    'bar': 0.75,
+    'art_gallery': 1.5,
+    'bar': 1.0,
     'cafe': 0.5,
-    'church': 0.35,
-    'events': 1.0,
+    'church': 0.45,
+    'events': 2.0,
     'library': 0.5,
-    'museum': 1.5,
-    'park': 0.75,
+    'museum': 2.0,
+    'park': 1.0,
     'restaurant': 1.5,
     'zoo': 2.0
 }
