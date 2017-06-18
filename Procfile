@@ -1,1 +1,1 @@
-web: waitress-serve --port $PORT wanderer:app
+web: waitress-serve --port $PORT wander:app

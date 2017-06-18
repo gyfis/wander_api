@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-from time import time
 from weather import Weather
 from places import Places
 from graphs import generate_paths
@@ -25,8 +24,6 @@ def api():
     places.filter(place_type_filter)
 
     paths = generate_paths((float(lon_in), float(lat_in)), (float(lon_out), float(lat_out)), places.data(), float(duration))
-
-    # distances = Distances([(float(lon_in), float(lat_in))] + places.locations() + [(float(lon_out), float(lat_out))])
 
     return jsonify({
         'bad_weather': in_weather.bad_weather or out_weather.bad_weather,
