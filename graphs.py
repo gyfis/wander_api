@@ -1,4 +1,4 @@
-from math import radians, cos, sin, asin, sqrt
+from math import radians, cos, sin, asin, sqrt, floor
 from places import fetch_photo_url
 import random
 
@@ -117,7 +117,14 @@ def generate_minimal_path(path, distances, duration):
     return new_path
 
 
-def beautify(loc_in, loc_out, path, places):
+def string_time(time):
+    h = int(floor(time))
+    m = int(floor((time - h) * 60))
+
+    return '{} hour{}, {} minute{}'.format(h, '' if h == 1 else 's', m, '' if m == 1 else 's')
+
+
+def beautify(loc_in, loc_out, path, distances, places):
     data = [{'lon': loc_in[0], 'lat': loc_in[1]}]
 
     for p in path[1:-1]:
@@ -127,12 +134,12 @@ def beautify(loc_in, loc_out, path, places):
             'lat': place['geometry']['location']['lat'],
             'photo_url': fetch_photo_url(place),
             'name': place['name'],
-            'place_type': place['place_type']
+            'place_type': place['place_type'],
         })
 
     data.append({'lon': loc_out[0], 'lat': loc_out[1]})
 
-    return data
+    return {'duration': string_time(path_distance(path, distances)), 'path': data}
 
 
 def generate_paths(loc_in, loc_out, places_data, duration):
@@ -181,7 +188,7 @@ def generate_paths(loc_in, loc_out, places_data, duration):
 
     # if the minimum path is already over our limit, return it
     if path_dist > duration:
-        return beautify(loc_in, loc_out, base_path, places)
+        return beautify(loc_in, loc_out, base_path, distances, places)
 
     possible_paths = []
     for _ in range(10):
@@ -192,7 +199,7 @@ def generate_paths(loc_in, loc_out, places_data, duration):
 
     final_paths = list(map(lambda l: l[1], list(sorted([(path_rank(path, places), path) for path in possible_paths]))[::-1][:_TAKE_PATHS]))
     # print(final_paths)
-    return [beautify(loc_in, loc_out, path, places) for path in final_paths]
+    return [beautify(loc_in, loc_out, path, distances, places) for path in final_paths]
 
     # print('=====')
     # possible_paths = []
