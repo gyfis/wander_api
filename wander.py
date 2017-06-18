@@ -19,8 +19,6 @@ def api():
     if lat_in == -1 or lon_in == -1 or lat_out == -1 or lon_out == -1 or duration == -1:
         return False, 404
 
-    t = time()
-
     in_weather = Weather(lat_in, lon_in)
     out_weather = Weather(lat_out, lon_out)
     places = Places(lat_in, lon_in, in_weather.bad_weather or out_weather.bad_weather)
