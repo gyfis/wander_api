@@ -7,11 +7,6 @@ from graphs import generate_paths
 app = Flask(__name__)
 
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
-
-
 @app.route('/api/', methods=['GET'])
 def api():
     lat_in = request.args.get('lat_in', -1)
