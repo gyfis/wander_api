@@ -10,5 +10,5 @@ MarkupSafe==1.0
 numpy==1.13.0
 requests==2.18.1
 urllib3==1.21.1
-waitress==1.0.2
+waitress==1.4.0
 Werkzeug==0.12.2
